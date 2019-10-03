@@ -49,22 +49,87 @@ trash_wheel =
 precip_2017 =
   read_excel("./data/Trash-Wheel.xlsx", sheet = 6, range = "A2:B14") %>%
   janitor::clean_names() %>%
-  mutate (year = 2017)
+  mutate (year = 2017) %>%
+  select(year,month,total)
 precip_2017
 ```
 
     ## # A tibble: 12 x 3
-    ##    month total  year
+    ##     year month total
     ##    <dbl> <dbl> <dbl>
-    ##  1     1  2.34  2017
-    ##  2     2  1.46  2017
-    ##  3     3  3.57  2017
-    ##  4     4  3.99  2017
-    ##  5     5  5.64  2017
-    ##  6     6  1.4   2017
-    ##  7     7  7.09  2017
-    ##  8     8  4.44  2017
-    ##  9     9  1.95  2017
-    ## 10    10  0     2017
-    ## 11    11  0.11  2017
-    ## 12    12  0.94  2017
+    ##  1  2017     1  2.34
+    ##  2  2017     2  1.46
+    ##  3  2017     3  3.57
+    ##  4  2017     4  3.99
+    ##  5  2017     5  5.64
+    ##  6  2017     6  1.4 
+    ##  7  2017     7  7.09
+    ##  8  2017     8  4.44
+    ##  9  2017     9  1.95
+    ## 10  2017    10  0   
+    ## 11  2017    11  0.11
+    ## 12  2017    12  0.94
+
+  - Read and clean precipitation data for 2018
+  - Omitting rows without data and adding variable 2018
+
+<!-- end list -->
+
+``` r
+precip_2018 =
+  read_excel("./Data/Trash-Wheel.xlsx", sheet = 5, range = "A2:B14") %>%
+  janitor::clean_names() %>%
+  mutate (year = 2018) %>%
+  select (year,month,total)
+precip_2018
+```
+
+    ## # A tibble: 12 x 3
+    ##     year month total
+    ##    <dbl> <dbl> <dbl>
+    ##  1  2018     1  0.94
+    ##  2  2018     2  4.8 
+    ##  3  2018     3  2.69
+    ##  4  2018     4  4.69
+    ##  5  2018     5  9.27
+    ##  6  2018     6  4.77
+    ##  7  2018     7 10.2 
+    ##  8  2018     8  6.45
+    ##  9  2018     9 10.5 
+    ## 10  2018    10  2.12
+    ## 11  2018    11  7.82
+    ## 12  2018    12  6.11
+
+  - Combining precipation datasets, converting month to character
+    variable
+
+<!-- end list -->
+
+``` r
+combine_precip = 
+  full_join(precip_2017,precip_2018) %>%
+  mutate(month= month.abb[month])
+```
+
+    ## Joining, by = c("year", "month", "total")
+
+``` r
+combine_precip
+```
+
+    ## # A tibble: 24 x 3
+    ##     year month total
+    ##    <dbl> <chr> <dbl>
+    ##  1  2017 Jan    2.34
+    ##  2  2017 Feb    1.46
+    ##  3  2017 Mar    3.57
+    ##  4  2017 Apr    3.99
+    ##  5  2017 May    5.64
+    ##  6  2017 Jun    1.4 
+    ##  7  2017 Jul    7.09
+    ##  8  2017 Aug    4.44
+    ##  9  2017 Sep    1.95
+    ## 10  2017 Oct    0   
+    ## # … with 14 more rows
+
+  - \*Description of data:

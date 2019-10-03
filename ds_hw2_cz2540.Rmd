@@ -26,7 +26,25 @@ trash_wheel =
 precip_2017 =
   read_excel("./data/Trash-Wheel.xlsx", sheet = 6, range = "A2:B14") %>%
   janitor::clean_names() %>%
-  mutate (year = 2017)
+  mutate (year = 2017) %>%
+  select(year,month,total)
 precip_2017
 ```
-
+* Read and clean precipitation data for 2018 
+* Omitting rows without data and adding variable 2018
+```{r}
+precip_2018 =
+  read_excel("./Data/Trash-Wheel.xlsx", sheet = 5, range = "A2:B14") %>%
+  janitor::clean_names() %>%
+  mutate (year = 2018) %>%
+  select (year,month,total)
+precip_2018
+```
+* Combining precipation datasets, converting month to character variable  
+```{r}
+combine_precip = 
+  full_join(precip_2017,precip_2018) %>%
+  mutate(month= month.abb[month])
+combine_precip
+```
+* *Description of data: 
