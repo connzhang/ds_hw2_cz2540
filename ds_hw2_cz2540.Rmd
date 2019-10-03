@@ -11,6 +11,8 @@ library(readxl)
 ```
 
 ## Problem 1
+* Importing trash wheel data and tidying/cleaning the data 
+* Omitting non-data entries and rows that do not include dumpster specific data
 ```{r}
 trash_wheel = 
   read_excel("./data/Trash-Wheel.xlsx", sheet = 1) %>%
@@ -18,6 +20,7 @@ trash_wheel =
   drop_na (dumpster) %>%
   select(-15, -16, -17) %>%
   mutate(sports_balls = as.integer(sports_balls))
+trash_wheel
 ```
 * Read and clean precipitation data for 2017 
 * Omitting rows without data and adding variable 2017
@@ -42,10 +45,39 @@ precip_2018
 * Combining precipation datasets, converting month to character variable  
 ```{r}
 combine_precip = 
-  bind_rows(precip_2017,precip_2018) %>%
+  full_join(precip_2017,precip_2018) %>%
   mutate(month= as.numeric(month), month = month.name[month]) 
 combine_precip
 ```
 **Description of data:** 
 
-* The Mr. Trash Wheel dataset contains information on dumpster number, date of trash collection, amount of total litter collected and the type of litter collected.The combined precipitation dataset contains information on total precipitation in inches for each month of 2017 and 2018 periods. The number of observations in both resulting datasets are `r NROW(pull(trash_wheel))` and `r NROW(pull(combine_precip))` respectively.The total amount of precipitation in 2018 was `r sum(pull(filter(combine_precip,year==2018),total))`. The median number of sports balls in a dumpster in 2017 is `r median(pull(filter(trash_wheel,year==2017),sports_balls))`. 
+* The Mr. Trash Wheel dataset contains information inlcuding amount of total litter collected and the type of litter collected, such as sports balls, plastic bags, and glass bottles .The combined precipitation dataset contains information on total precipitation for each month of 2017 and 2018 periods, measured in inches. There are `r dim(trash_wheel)[1]` observations in the Mr. Trash Wheel dataset and `r dim(combine_precip)[1]` observations in the combined precipitation 2017-2018 dataset. The total amount of precipitation in 2018 was `r sum(pull(filter(combine_precip,year==2018),total))`. The median number of sports balls in a dumpster in 2017 is `r median(pull(filter(trash_wheel,year==2017),sports_balls))`. 
+
+## Problem 3
+* Importing, loading, and tidying NYC Open data on popularity of baby names 
+```{r}
+baby_data =
+  read_csv ("./data/popular_baby_names.csv") %>%
+  janitor::clean_names() %>%
+  distinct() %>%
+  mutate(ethnicity =recode(ethnicity, "ASIAN AND PACI" = "ASIAN AND PACIFIC ISLANDER", "BLACK NON HISP" = "BLACK NON HISPANIC", "WHITE NON HISP" = "WHITE NON HISPANIC"), ethnicity = str_to_lower(ethnicity), gender = str_to_lower(gender), childs_first_name = str_to_lower (childs_first_name))
+baby_data
+```
+* Creating table showing the name Olivia and its rank in popularity for female babies over time
+```{r}
+baby_data %>%
+  filter (childs_first_name == "olivia") %>%
+  select (-count) %>%
+  pivot_wider(names_from = "year_of_birth", values_from = "rank") %>%
+  knitr::kable()
+```
+* Creating table showing the most popular male child name over time 
+```{r}
+baby_data %>%
+  filter (gender == "male") %>%
+  select (-count) %>%
+  pivot_wider(names_from = "year_of_birth", values_from = "rank") %>%
+  knitr::kable()
+```
+```{r}
+
