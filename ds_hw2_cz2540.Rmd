@@ -69,9 +69,12 @@ pols_month
 snp_data = 
   read_csv("./data/snp.csv") %>%
   janitor::clean_names() %>%
-  separate(date, into= c("year", "month", "day")) %>%
-  mutate(month = as.numeric(month), month =month.abb[month], year= as.numeric(year))
+  separate(date, c("month", "day", "year")) %>%
+  mutate(year = as.numeric(year), month = as.numeric(month), month = month.name[month]) %>%
+  select(year, month, -day, close) %>%
+  arrange (year, month)
 snp_data
+
 ```
 * Tidy unemployment.csv which will then be merged with snp.csv and pols-month.csv
 ```{r}
@@ -79,12 +82,24 @@ unemployment_data =
   read_csv("./data/unemployment.csv") %>%
   pivot_longer((Jan:Dec), 
                names_to = "month", 
-               values_to = "percent") 
+               values_to = "percent") %>%
+  janitor::clean_names()
 unemployment_data
+```
+* Merge snp.csv with pols-month.csv, and then with unemployment.csv
+```{r}
+polsnp_data =
+ left_join(pols_month, snp_data, by = c("year", "month"))
+
+merged_data = 
+  left_join(polsnp_data, unemployment_data, by = c("year", "month"))
+merged_data
 ```
 **Description of data:** 
 
-* The  
+* The 
+
+The resulting dataset, merged_data, has the following range of years: a minimum year of `r min(pull(merged_data, year))` to a maximum year of `r max(pull(merged_data,year))`
 Explain briefly what each dataset contained, and describe the resulting dataset (e.g. give the dimension, range of years, and names of key variables
 
 ## Problem 3

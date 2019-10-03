@@ -205,8 +205,10 @@ pols_month
 snp_data = 
   read_csv("./data/snp.csv") %>%
   janitor::clean_names() %>%
-  separate(date, into= c("year", "month", "day")) %>%
-  mutate(month = as.numeric(month), month =month.abb[month], year= as.numeric(year))
+  separate(date, c("month", "day", "year")) %>%
+  mutate(year = as.numeric(year), month = as.numeric(month), month = month.name[month]) %>%
+  select(year, month, -day, close) %>%
+  arrange (year, month)
 ```
 
     ## Parsed with column specification:
@@ -219,19 +221,19 @@ snp_data =
 snp_data
 ```
 
-    ## # A tibble: 787 x 4
-    ##     year month day   close
-    ##    <dbl> <chr> <chr> <dbl>
-    ##  1     7 Jan   2015  2080.
-    ##  2     6 Jan   2015  2063.
-    ##  3     5 Jan   2015  2107.
-    ##  4     4 Jan   2015  2086.
-    ##  5     3 Feb   2015  2068.
-    ##  6     2 Feb   2015  2104.
-    ##  7     1 Feb   2015  1995.
-    ##  8    12 Jan   2014  2059.
-    ##  9    11 Mar   2014  2068.
-    ## 10    10 Jan   2014  2018.
+    ## # A tibble: 787 x 3
+    ##     year month    close
+    ##    <dbl> <chr>    <dbl>
+    ##  1  1950 April     18.0
+    ##  2  1950 August    18.4
+    ##  3  1950 December  20.4
+    ##  4  1950 February  17.2
+    ##  5  1950 January   17.0
+    ##  6  1950 July      17.8
+    ##  7  1950 June      17.7
+    ##  8  1950 March     17.3
+    ##  9  1950 May       18.8
+    ## 10  1950 November  19.5
     ## # … with 777 more rows
 
   - Tidy unemployment.csv which will then be merged with snp.csv and
@@ -244,7 +246,8 @@ unemployment_data =
   read_csv("./data/unemployment.csv") %>%
   pivot_longer((Jan:Dec), 
                names_to = "month", 
-               values_to = "percent") 
+               values_to = "percent") %>%
+  janitor::clean_names()
 ```
 
     ## Parsed with column specification:
@@ -269,7 +272,7 @@ unemployment_data
 ```
 
     ## # A tibble: 816 x 3
-    ##     Year month percent
+    ##     year month percent
     ##    <dbl> <chr>   <dbl>
     ##  1  1948 Jan       3.4
     ##  2  1948 Feb       3.8
@@ -283,12 +286,42 @@ unemployment_data
     ## 10  1948 Oct       3.7
     ## # … with 806 more rows
 
+  - Merge snp.csv with pols-month.csv, and then with unemployment.csv
+
+<!-- end list -->
+
+``` r
+polsnp_data =
+ left_join(pols_month, snp_data, by = c("year", "month"))
+
+merged_data = 
+  left_join(polsnp_data, unemployment_data, by = c("year", "month"))
+merged_data
+```
+
+    ## # A tibble: 822 x 11
+    ##     year month gov_gop sen_gop rep_gop gov_dem sen_dem rep_dem president
+    ##    <dbl> <chr>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>    
+    ##  1  1947 Jan        23      51     253      23      45     198 dem      
+    ##  2  1947 Feb        23      51     253      23      45     198 dem      
+    ##  3  1947 Mar        23      51     253      23      45     198 dem      
+    ##  4  1947 Apr        23      51     253      23      45     198 dem      
+    ##  5  1947 May        23      51     253      23      45     198 dem      
+    ##  6  1947 Jun        23      51     253      23      45     198 dem      
+    ##  7  1947 Jul        23      51     253      23      45     198 dem      
+    ##  8  1947 Aug        23      51     253      23      45     198 dem      
+    ##  9  1947 Sep        23      51     253      23      45     198 dem      
+    ## 10  1947 Oct        23      51     253      23      45     198 dem      
+    ## # … with 812 more rows, and 2 more variables: close <dbl>, percent <dbl>
+
 **Description of data:**
 
-  - The  
-    Explain briefly what each dataset contained, and describe the
-    resulting dataset (e.g. give the dimension, range of years, and
-    names of key variables
+  - The
+
+The resulting dataset, merged\_data, has the following range of years: a
+minimum year of 1947 to a maximum year of 2015 Explain briefly what each
+dataset contained, and describe the resulting dataset (e.g. give the
+dimension, range of years, and names of key variables
 
 ## Problem 3
 
@@ -423,4 +456,4 @@ scatterplot_child = baby_data %>%
 ggplot(scatterplot_child, aes(x = rank, y = count )) + geom_point()
 ```
 
-![](ds_hw2_cz2540_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](ds_hw2_cz2540_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
