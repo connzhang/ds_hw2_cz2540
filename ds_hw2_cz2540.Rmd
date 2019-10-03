@@ -51,7 +51,15 @@ combine_precip
 ```
 **Description of data:** 
 
-* The `trash_wheel` dataset contains information inlcuding amount of total litter collected and the type of litter collected, such as sports balls, plastic bags, and glass bottles .The `combine_precip` dataset contains information on total precipitation for each month of 2017 and 2018 periods, measured in inches. There are `r dim(trash_wheel)[1]` observations in the `trash_wheel` dataset and `r dim(combine_precip)[1]` observations in the `combine_precip` dataset. The total amount of precipitation in 2018 was `r sum(pull(filter(combine_precip,year==2018),total))`. The median number of sports balls in a dumpster in 2017 is `r median(pull(filter(trash_wheel,year==2017),sports_balls))`. 
+The `trash_wheel` dataset contains information inlcuding amount of total litter collected and the type of litter collected, such as sports balls, plastic bags, and glass bottles .
+
+The `combine_precip` dataset contains information on total precipitation for each month of 2017 and 2018 periods, measured in inches. 
+
+There are `r dim(trash_wheel)[1]` observations in the `trash_wheel` dataset and `r dim(combine_precip)[1]` observations in the `combine_precip` dataset. 
+
+The total amount of precipitation in 2018 was `r sum(pull(filter(combine_precip,year==2018),total))`. 
+
+The median number of sports balls in a dumpster in 2017 is `r median(pull(filter(trash_wheel,year==2017),sports_balls))`. 
 
 ## Problem 2 
 * Clean pols_month data and create a president variable 
@@ -97,10 +105,13 @@ merged_data
 ```
 **Description of data:** 
 
-* The 
+In the `pols_month` dataset, there were `r nrow(pols_month)` observations and `r ncol(pols_month)` variables. The years ranged from `r min(pull(pols_month, year))` to `r max(pull(pols_month, year))`. Key variables include specifying the elected president's presidential party affiliation, as well as the number of governors, senators and representatives across different time periods, with their party affiliation. 
 
-The resulting dataset, merged_data, has the following range of years: a minimum year of `r min(pull(merged_data, year))` to a maximum year of `r max(pull(merged_data,year))`
-Explain briefly what each dataset contained, and describe the resulting dataset (e.g. give the dimension, range of years, and names of key variables
+In the `snp_data` dataset, there were `r nrow(snp_data)` observations and `r ncol(snp_data)` variables. The years ranged from `r min(pull(snp_data, year))` to `r max(pull(snp_data, year))`. Key variables include the closing values of the S&P stock index as they varied over different months of their respective years. 
+
+In the `unemployment_data` dataset, there were `r nrow(unemployment_data)` observations and `r ncol(unemployment_data)` variables. The years ranged from `r min(pull(unemployment_data, year))` to `r max(pull(unemployment_data, year))`. Key variables include the unemployment rate across different months of their respective years. 
+
+In the `merged_data` dataset, there were `r nrow(merged_data)` observations and `r ncol(merged_data)` variables. The years ranged from `r min(pull(merged_data, year))` to `r max(pull(merged_data, year))`. This includes all previously mentioned key variables into a combined dataset. 
 
 ## Problem 3
 * Importing, loading, and tidying NYC Open data on popularity of baby names 

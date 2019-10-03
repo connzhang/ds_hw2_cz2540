@@ -140,15 +140,19 @@ combine_precip
 
 **Description of data:**
 
-  - The `trash_wheel` dataset contains information inlcuding amount of
-    total litter collected and the type of litter collected, such as
-    sports balls, plastic bags, and glass bottles .The `combine_precip`
-    dataset contains information on total precipitation for each month
-    of 2017 and 2018 periods, measured in inches. There are 344
-    observations in the `trash_wheel` dataset and 24 observations in the
-    `combine_precip` dataset. The total amount of precipitation in 2018
-    was 70.33. The median number of sports balls in a dumpster in 2017
-    is 8.
+The `trash_wheel` dataset contains information inlcuding amount of total
+litter collected and the type of litter collected, such as sports balls,
+plastic bags, and glass bottles .
+
+The `combine_precip` dataset contains information on total precipitation
+for each month of 2017 and 2018 periods, measured in inches.
+
+There are 344 observations in the `trash_wheel` dataset and 24
+observations in the `combine_precip` dataset.
+
+The total amount of precipitation in 2018 was 70.33.
+
+The median number of sports balls in a dumpster in 2017 is 8.
 
 ## Problem 2
 
@@ -316,12 +320,24 @@ merged_data
 
 **Description of data:**
 
-  - The
+In the `pols_month` dataset, there were 822 observations and 9
+variables. The years ranged from 1947 to 2015. Key variables include
+specifying the elected president’s presidential party affiliation, as
+well as the number of governors, senators and representatives across
+different time periods, with their party affiliation.
 
-The resulting dataset, merged\_data, has the following range of years: a
-minimum year of 1947 to a maximum year of 2015 Explain briefly what each
-dataset contained, and describe the resulting dataset (e.g. give the
-dimension, range of years, and names of key variables
+In the `snp_data` dataset, there were 787 observations and 3 variables.
+The years ranged from 1950 to 2015. Key variables include the closing
+values of the S\&P stock index as they varied over different months of
+their respective years.
+
+In the `unemployment_data` dataset, there were 816 observations and 3
+variables. The years ranged from 1948 to 2015. Key variables include the
+unemployment rate across different months of their respective years.
+
+In the `merged_data` dataset, there were 822 observations and 11
+variables. The years ranged from 1947 to 2015. This includes all
+previously mentioned key variables into a combined dataset.
 
 ## Problem 3
 
