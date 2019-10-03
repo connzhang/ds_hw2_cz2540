@@ -71,7 +71,21 @@ snp_data =
   janitor::clean_names() %>%
   separate(date, into= c("year", "month", "day")) %>%
   mutate(month = as.numeric(month), month =month.abb[month], year= as.numeric(year))
+snp_data
 ```
+* Tidy unemployment.csv which will then be merged with snp.csv and pols-month.csv
+```{r}
+unemployment_data = 
+  read_csv("./data/unemployment.csv") %>%
+  pivot_longer((Jan:Dec), 
+               names_to = "month", 
+               values_to = "percent") 
+unemployment_data
+```
+**Description of data:** 
+
+* The  
+Explain briefly what each dataset contained, and describe the resulting dataset (e.g. give the dimension, range of years, and names of key variables
 
 ## Problem 3
 * Importing, loading, and tidying NYC Open data on popularity of baby names 
@@ -83,6 +97,7 @@ baby_data =
   mutate(ethnicity =recode(ethnicity, "ASIAN AND PACI" = "ASIAN AND PACIFIC ISLANDER", "BLACK NON HISP" = "BLACK NON HISPANIC", "WHITE NON HISP" = "WHITE NON HISPANIC"), ethnicity = str_to_lower(ethnicity), gender = str_to_lower(gender), childs_first_name = str_to_lower (childs_first_name))
 baby_data
 ```
+
 * Creating table showing the name Olivia and its rank in popularity for female babies over time
 ```{r}
 baby_data %>%
@@ -90,13 +105,15 @@ baby_data %>%
   select (-count) %>%
   pivot_wider(names_from = "year_of_birth", values_from = "rank") %>%
   knitr::kable()
+baby_data
 ```
 
 * Creating table showing the most popular male child name over time 
 ```{r}
 baby_data %>%
-  filter (gender == "male") %>%
+  filter (gender == "male", rank == 1) %>%
   select (-count) %>%
-  pivot_wider(names_from = "year_of_birth", values_from = "rank") %>%
+  pivot_wider(names_from = "year_of_birth", values_from = "childs_first_name") %>%
   knitr::kable()
+baby_data
 ```
