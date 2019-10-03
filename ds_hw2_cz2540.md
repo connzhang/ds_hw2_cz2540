@@ -18,28 +18,6 @@ trash_wheel =
     ## * `` -> ...16
     ## * `` -> ...17
 
-``` r
-  trash_wheel
-```
-
-    ## # A tibble: 344 x 14
-    ##    dumpster month  year date                weight_tons volume_cubic_ya…
-    ##       <dbl> <chr> <dbl> <dttm>                    <dbl>            <dbl>
-    ##  1        1 May    2014 2014-05-16 00:00:00        4.31               18
-    ##  2        2 May    2014 2014-05-16 00:00:00        2.74               13
-    ##  3        3 May    2014 2014-05-16 00:00:00        3.45               15
-    ##  4        4 May    2014 2014-05-17 00:00:00        3.1                15
-    ##  5        5 May    2014 2014-05-17 00:00:00        4.06               18
-    ##  6        6 May    2014 2014-05-20 00:00:00        2.71               13
-    ##  7        7 May    2014 2014-05-21 00:00:00        1.91                8
-    ##  8        8 May    2014 2014-05-28 00:00:00        3.7                16
-    ##  9        9 June   2014 2014-06-05 00:00:00        2.52               14
-    ## 10       10 June   2014 2014-06-11 00:00:00        3.76               18
-    ## # … with 334 more rows, and 8 more variables: plastic_bottles <dbl>,
-    ## #   polystyrene <dbl>, cigarette_butts <dbl>, glass_bottles <dbl>,
-    ## #   grocery_bags <dbl>, chip_bags <dbl>, sports_balls <int>,
-    ## #   homes_powered <dbl>
-
   - Read and clean precipitation data for 2017
   - Omitting rows without data and adding variable 2017
 
@@ -127,13 +105,13 @@ combine_precip
     ## 10  2017 October    0   
     ## # … with 14 more rows
 
-  - **Description of data:** The Mr. Trash Wheel dataset contains
-    information on dumpster number, date of trash collection, amount of
-    total litter collected and the type of litter collected. The
-    combined precipitation dataset contains information on total
-    precipitation in inches for each month of 2017 and 2018 periods. The
-    number of observations in both resulting datasets are 344 and 24
-    respectively. The total amount of precipitation in 2018 was 103.26.
-    The median number of sports balls in a dumpster in 2017 is 8.
+**Description of data:**
 
-## Problem 2
+  - The Mr. Trash Wheel dataset contains information on dumpster number,
+    date of trash collection, amount of total litter collected and the
+    type of litter collected.The combined precipitation dataset contains
+    information on total precipitation in inches for each month of 2017
+    and 2018 periods. The number of observations in both resulting
+    datasets are 344 and 24 respectively.The total amount of
+    precipitation in 2018 was 70.33. The median number of sports balls
+    in a dumpster in 2017 is 8.
