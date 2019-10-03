@@ -25,7 +25,7 @@ trash_wheel =
     ## * `` -> ...17
 
 ``` r
-trash_wheel
+trash_wheel 
 ```
 
     ## # A tibble: 344 x 14
@@ -140,15 +140,80 @@ combine_precip
 
 **Description of data:**
 
-  - The Mr. Trash Wheel dataset contains information inlcuding amount of
+  - The `trash_wheel` dataset contains information inlcuding amount of
     total litter collected and the type of litter collected, such as
-    sports balls, plastic bags, and glass bottles .The combined
-    precipitation dataset contains information on total precipitation
-    for each month of 2017 and 2018 periods, measured in inches. There
-    are 344 observations in the Mr. Trash Wheel dataset and 24
-    observations in the combined precipitation 2017-2018 dataset. The
-    total amount of precipitation in 2018 was 70.33. The median number
-    of sports balls in a dumpster in 2017 is 8.
+    sports balls, plastic bags, and glass bottles .The `combine_precip`
+    dataset contains information on total precipitation for each month
+    of 2017 and 2018 periods, measured in inches. There are 344
+    observations in the `trash_wheel` dataset and 24 observations in the
+    `combine_precip` dataset. The total amount of precipitation in 2018
+    was 70.33. The median number of sports balls in a dumpster in 2017
+    is 8.
+
+## Problem 2
+
+  - Clean pols\_month data and create a president variable
+
+<!-- end list -->
+
+``` r
+pols_month = 
+  read_csv("./data/pols-month.csv") %>%
+  janitor::clean_names() %>%
+  separate(mon, into= c("year", "month", "day")) %>%
+  mutate (month = as.numeric(month), month = month.abb[month], year= as.numeric(year), president = ifelse(prez_gop, "gop", "dem")) %>%
+  select(-prez_gop, -prez_dem, -day)
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   mon = col_date(format = ""),
+    ##   prez_gop = col_double(),
+    ##   gov_gop = col_double(),
+    ##   sen_gop = col_double(),
+    ##   rep_gop = col_double(),
+    ##   prez_dem = col_double(),
+    ##   gov_dem = col_double(),
+    ##   sen_dem = col_double(),
+    ##   rep_dem = col_double()
+    ## )
+
+``` r
+pols_month
+```
+
+    ## # A tibble: 822 x 9
+    ##     year month gov_gop sen_gop rep_gop gov_dem sen_dem rep_dem president
+    ##    <dbl> <chr>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <chr>    
+    ##  1  1947 Jan        23      51     253      23      45     198 dem      
+    ##  2  1947 Feb        23      51     253      23      45     198 dem      
+    ##  3  1947 Mar        23      51     253      23      45     198 dem      
+    ##  4  1947 Apr        23      51     253      23      45     198 dem      
+    ##  5  1947 May        23      51     253      23      45     198 dem      
+    ##  6  1947 Jun        23      51     253      23      45     198 dem      
+    ##  7  1947 Jul        23      51     253      23      45     198 dem      
+    ##  8  1947 Aug        23      51     253      23      45     198 dem      
+    ##  9  1947 Sep        23      51     253      23      45     198 dem      
+    ## 10  1947 Oct        23      51     253      23      45     198 dem      
+    ## # … with 812 more rows
+
+  - Clean snp.csv data by arranging according to year and month
+
+<!-- end list -->
+
+``` r
+snp_data = 
+  read_csv("./data/snp.csv") %>%
+  janitor::clean_names() %>%
+  separate(date, into= c("year", "month", "day")) %>%
+  mutate(month = as.numeric(month), month =month.abb[month], year= as.numeric(year))
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   date = col_character(),
+    ##   close = col_double()
+    ## )
 
 ## Problem 3
 
@@ -207,13 +272,16 @@ baby_data %>%
   knitr::kable()
 ```
 
-| gender     | ethnicity                     | childs\_first\_name |    2016 | 2015 | 2014 | 2013 | 2012 | 2011 |
-| :--------- | :---------------------------- | :------------------ | ------: | ---: | ---: | ---: | ---: | ---: |
-| female     | asian and pacific islander    | olivia              |       1 |    1 |    1 |    3 |    3 |    4 |
-| female     | black non hispanic            | olivia              |       8 |    4 |    8 |    6 |    8 |   10 |
-| female     | hispanic                      | olivia              |      13 |   16 |   16 |   22 |   22 |   18 |
-| female     | white non hispanic            | olivia              |       1 |    1 |    1 |    1 |    4 |    2 |
-| \* Creatin | g table showing the most popu | lar male child name | over ti |   me |      |      |      |      |
+| gender | ethnicity                  | childs\_first\_name | 2016 | 2015 | 2014 | 2013 | 2012 | 2011 |
+| :----- | :------------------------- | :------------------ | ---: | ---: | ---: | ---: | ---: | ---: |
+| female | asian and pacific islander | olivia              |    1 |    1 |    1 |    3 |    3 |    4 |
+| female | black non hispanic         | olivia              |    8 |    4 |    8 |    6 |    8 |   10 |
+| female | hispanic                   | olivia              |   13 |   16 |   16 |   22 |   22 |   18 |
+| female | white non hispanic         | olivia              |    1 |    1 |    1 |    1 |    4 |    2 |
+
+  - Creating table showing the most popular male child name over time
+
+<!-- end list -->
 
 ``` r
 baby_data %>%
