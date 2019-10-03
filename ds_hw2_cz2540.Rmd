@@ -1,0 +1,32 @@
+---
+title: "P8105 Homework 2"
+author: "Connie Zhang"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readxl)
+```
+
+## Problem 1
+```{r}
+trash_wheel = 
+  read_excel("./data/Trash-Wheel.xlsx", sheet = 1) %>%
+  janitor::clean_names() %>%
+  drop_na (dumpster) %>%
+  select(-15, -16, -17) %>%
+  mutate(sports_balls = as.integer(sports_balls))
+  trash_wheel
+```
+* Read and clean precipitation data for 2017 
+* Omitting rows without data and adding variable 2017
+```{r}
+precip_2017 =
+  read_excel("./data/Trash-Wheel.xlsx", sheet = 6, range = "A2:B14") %>%
+  janitor::clean_names() %>%
+  mutate (year = 2017)
+precip_2017
+```
+
