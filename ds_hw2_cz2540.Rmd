@@ -43,8 +43,15 @@ precip_2018
 * Combining precipation datasets, converting month to character variable  
 ```{r}
 combine_precip = 
-  full_join(precip_2017,precip_2018) %>%
-  mutate(month= month.abb[month])
+  bind_rows(precip_2017,precip_2018) %>%
+  mutate(month= as.numeric(month), month = month.name[month]) 
 combine_precip
 ```
-* *Description of data: 
+* **Description of data:** 
+The Mr. Trash Wheel dataset contains information on dumpster number, date of trash collection, amount of total litter collected and the type of litter collected. 
+The combined precipitation dataset contains information on total precipitation in inches for each month of 2017 and 2018 periods. 
+The number of observations in both resulting datasets are `r NROW(pull(trash_wheel))` and `r NROW(pull(combine_precip))` respectively. 
+The total amount of precipitation in 2018 was `r sum(pull(combine_precip,total))`.
+The median number of sports balls in a dumpster in 2017 is `r median(pull(trash_wheel, sports_balls))`. 
+
+## Problem 2

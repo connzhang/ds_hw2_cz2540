@@ -107,29 +107,33 @@ precip_2018
 
 ``` r
 combine_precip = 
-  full_join(precip_2017,precip_2018) %>%
-  mutate(month= month.abb[month])
-```
-
-    ## Joining, by = c("year", "month", "total")
-
-``` r
+  bind_rows(precip_2017,precip_2018) %>%
+  mutate(month= as.numeric(month), month = month.name[month]) 
 combine_precip
 ```
 
     ## # A tibble: 24 x 3
-    ##     year month total
-    ##    <dbl> <chr> <dbl>
-    ##  1  2017 Jan    2.34
-    ##  2  2017 Feb    1.46
-    ##  3  2017 Mar    3.57
-    ##  4  2017 Apr    3.99
-    ##  5  2017 May    5.64
-    ##  6  2017 Jun    1.4 
-    ##  7  2017 Jul    7.09
-    ##  8  2017 Aug    4.44
-    ##  9  2017 Sep    1.95
-    ## 10  2017 Oct    0   
+    ##     year month     total
+    ##    <dbl> <chr>     <dbl>
+    ##  1  2017 January    2.34
+    ##  2  2017 February   1.46
+    ##  3  2017 March      3.57
+    ##  4  2017 April      3.99
+    ##  5  2017 May        5.64
+    ##  6  2017 June       1.4 
+    ##  7  2017 July       7.09
+    ##  8  2017 August     4.44
+    ##  9  2017 September  1.95
+    ## 10  2017 October    0   
     ## # … with 14 more rows
 
-  - \*Description of data:
+  - **Description of data:** The Mr. Trash Wheel dataset contains
+    information on dumpster number, date of trash collection, amount of
+    total litter collected and the type of litter collected. The
+    combined precipitation dataset contains information on total
+    precipitation in inches for each month of 2017 and 2018 periods. The
+    number of observations in both resulting datasets are 344 and 24
+    respectively. The total amount of precipitation in 2018 was 103.26.
+    The median number of sports balls in a dumpster in 2017 is 8.
+
+## Problem 2
