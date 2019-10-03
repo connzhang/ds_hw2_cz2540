@@ -410,3 +410,17 @@ baby_data
     ##  9          2016 female asian and pacific isl… isabella            56     8
     ## 10          2016 female asian and pacific isl… hannah              56     8
     ## # … with 12,171 more rows
+
+  - Creating scatter plot with popularity of name (x axis) againgst
+    number of children with the name (y axis) for male, white
+    non-hispanic children born in 2016.
+
+<!-- end list -->
+
+``` r
+scatterplot_child = baby_data %>% 
+  filter(gender == "male", ethnicity == "white non hispanic", year_of_birth == "2016")
+ggplot(scatterplot_child, aes(x = rank, y = count )) + geom_point()
+```
+
+![](ds_hw2_cz2540_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->

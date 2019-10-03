@@ -117,3 +117,10 @@ baby_data %>%
   knitr::kable()
 baby_data
 ```
+* Creating scatter plot with popularity of name (x axis) againgst number of children with the name (y axis) for male, white non-hispanic children born in 2016. 
+
+```{r}
+scatterplot_child = baby_data %>% 
+  filter(gender == "male", ethnicity == "white non hispanic", year_of_birth == "2016")
+ggplot(scatterplot_child, aes(x = rank, y = count )) + geom_point()
+```
